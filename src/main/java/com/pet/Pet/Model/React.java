@@ -1,9 +1,6 @@
 package com.pet.Pet.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +15,11 @@ public class React {
     private Long id;
     private Long postId;
     private int postType;
-    private Long userId;
     private int reactType;
     private Long timestamp;
     private boolean isSaved;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Users user;
 }

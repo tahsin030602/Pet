@@ -1,5 +1,7 @@
 package com.pet.Pet.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class AdoptionRequest {
     private List<String> certificates;
     private String status;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "pet_id", referencedColumnName = "id")
     private Pet pet;

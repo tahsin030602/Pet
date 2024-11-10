@@ -19,16 +19,16 @@ public class Blog {
     private String  title;
     @Lob
     private String content;
-    private Long reactCount;
     private Long numberOfReports;
     private Long publicationDate;
     @OrderBy("lastUpdate DESC")
     private Long lastUpdate;
     private boolean featured;
-    private int ReactType;
     private List<String> media;
     private boolean isBanned;
     private Long numberOfComments;
+    private Long numberOfReact;
+    private int reactType;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")

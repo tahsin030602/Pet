@@ -1,5 +1,6 @@
 package com.pet.Pet.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,9 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Name;
+    private String name;
     @Column(length = 1000)
-    private String Description;
+    private String description;
     private float age;
     private float weight;
     @OrderBy("timeStamp DESC")
@@ -57,6 +58,7 @@ public class Pet {
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Users owner;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private List<AdoptionRequest> adoptionRequests;
 

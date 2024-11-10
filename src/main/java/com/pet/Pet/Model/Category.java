@@ -1,5 +1,6 @@
 package com.pet.Pet.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,10 +18,12 @@ public class Category {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
     private Animal animal;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categories")
     private List<Pet> pets;
 }

@@ -1,5 +1,6 @@
 package com.pet.Pet.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,13 +22,11 @@ public class Address {
     private String state;
     private String country;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<Pet> pets = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<Users>  users = new HashSet<>();
-
-    public Address orElse(Object o) {
-        return null;
-    }
 }

@@ -1,6 +1,7 @@
 package com.pet.Pet.Service;
 
 import com.pet.Pet.Model.Address;
+import com.pet.Pet.Model.UserPrincipal;
 import com.pet.Pet.Model.Users;
 import com.pet.Pet.Repo.AddressRepo;
 import com.pet.Pet.Repo.UsersRepo;
@@ -40,6 +41,16 @@ public class UserService {
     private AddressRepo addressRepo;
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+    public UserPrincipal getUserPrincipal() {
+        UserPrincipal userPrincipal = null;
+        try {
+            userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception ignored) {
+        }
+        return userPrincipal;
+    }
+
 
     public Users OtpSender(Users user) throws Exception {
         String OTP = String.format("%06d", new Random().nextInt(1000000));
@@ -107,10 +118,9 @@ public class UserService {
     }
 
     public String uploadPic(MultipartFile multipartFile,int target) throws IOException {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = getUserPrincipal();
         String url = firebaseService.uploadFile(multipartFile);
-        Users user = usersRepo.findByUsername(userDetails.getUsername());
+        Users user = usersRepo.findByUsername(userPrincipal.getUsername());
         if(target == 0) user.setProfilePic(url);
         else user.setCoverPic(url);
         usersRepo.save(user);
@@ -118,14 +128,13 @@ public class UserService {
     }
 
     public Users getMyProfile() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-        return usersRepo.findByUsername(userDetails.getUsername());
+        UserPrincipal user = getUserPrincipal();
+        return usersRepo.findByUsername(user.getUsername());
     }
 
     public Users updateBio(String newBio) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user = usersRepo.findByUsername(userDetails.getUsername());
+        UserPrincipal userPrincipal = getUserPrincipal();
+        Users user = usersRepo.findByUsername(userPrincipal.getUsername());
         user.setBio(newBio);
         return usersRepo.save(user);
     }
@@ -135,7 +144,7 @@ public class UserService {
     }
 
     public String updateAddress(Long id) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userDetails = getUserPrincipal();
         Users user = usersRepo.findByUsername(userDetails.getUsername());
         Address address = addressRepo.findById(id).orElse(null);
         user.setAddress(address);

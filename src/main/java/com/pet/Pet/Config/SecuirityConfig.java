@@ -43,7 +43,8 @@ public class SecuirityConfig {
                     .csrf(AbstractHttpConfigurer::disable)
                     .authorizeHttpRequests(request->request
                             .requestMatchers("/user/register","/user/verify/**","/user/isHas/**",
-                                    "/user/login","/user/reSentOtp/**","/user/isHasEmail/**")
+                                    "/user/login","/user/reSentOtp/**","/user/isHasEmail/**","/pet/get/**",
+                                    "pet/getPet/**","/user/Profile/**")
                             .permitAll()
                             .anyRequest().authenticated())
                     .httpBasic(Customizer.withDefaults())

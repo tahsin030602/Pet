@@ -1,6 +1,7 @@
 package com.pet.Pet.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.firebase.database.annotations.NotNull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,18 +34,19 @@ public class Users {
     private String email;
     private String phone;
     @Column(length = 1000)
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String profilePic;
     private String coverPic;
     private String role;
     private String dob;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String OTP;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long ExpireTimeOfOtp;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean enable;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int reportCount;
     private Long reportedTill;
 
